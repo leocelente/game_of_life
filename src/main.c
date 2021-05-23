@@ -32,21 +32,29 @@ void interface_file(int const N, const char *const filename) {
 
   life_t life = {.size = N};
   life_init(&life);
-   
 
   char input_buffer[32] = {0};
-  char *screen_buffer = malloc(life.size * life.size + 1*sizeof(char));
+  char *screen_buffer = malloc(life.size * life.size + 1 * sizeof(char));
   do {
     memset(input_buffer, 0, sizeof(input_buffer));
     fgets(input_buffer, sizeof(input_buffer), file);
 
     if (input_buffer[0] == 'W') {
       int x = atoi(&input_buffer[2]) - 1;
-      printf("write %d\n", x);
-      life_set(life, x, 1);
+      char *c = strchr(input_buffer, ',');
+      if (c == NULL) {
+        puts("incorrect command");
+        return;
+      }
+      int y = atoi(++c) - 1;
+
+      printf("write %d, %d\n", x, y);
+      life_set(life, x, y);
+
     } else if (strcmp(input_buffer, "START")) {
       puts("start");
       int frames = atoi(&input_buffer[6]);
+
       printf("Run for %d frames\n", frames);
       while (frames--) {
         life_nextframe(life);
