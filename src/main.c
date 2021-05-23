@@ -21,7 +21,15 @@ int main(int const argc, char **argv) {
   return 0;
 }
 
-void interface_command(int const N) {}
+  life_t life = {.size = N};
+  life_init(&life);
+  char input_buffer[32] = {0};
+  do {
+    fgets(input_buffer, sizeof(input_buffer), stdin);
+    printf("%s\n", input_buffer);
+  } while (strncmp(input_buffer, "START", 5) != 0);
+  life_destroy(life);
+}
 
 void interface_file(int const N, const char *const filename) {
   FILE *const file = fopen(filename, "r");
