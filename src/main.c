@@ -59,7 +59,7 @@ void interface_file(int const N, const char *const filename) {
       printf("write %d, %d\n", x, y);
       life_set(life, x, y);
 
-    } else if (strcmp(input_buffer, "START")) {
+    } else if (strncmp(input_buffer, "START", 5) == 0) {
       puts("start");
       int frames = atoi(&input_buffer[6]);
 
